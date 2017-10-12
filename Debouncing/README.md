@@ -1,15 +1,23 @@
-# Software Debouncing
-In previously labs, we talked about how objects such as switches can cause some nasty effects since they are actually a mechanical system at heart. We talked about the simple hardware method of debouncing, but due to the many different design constraints, you may not be able to add or adjust hardware. Debouncing is also only one of many applications which would require the use of built in Timers to allow for other processes to take place.
+# Debouncing
+* Creator: Jessica Wozniak
+* Created: October 5, 2017
+* Last updated: October 8, 2017
 
-## Task
-You need to utilize the TIMER modules within the MSP430 processors to implement a debounced switch to control the state of an LED. You most likely will want to hook up your buttons on the development boards to an oscilloscope to see how much time it takes for the buttons to settle. The idea here is that your processor should be able to run other code, while relying on timers and interrupts to manage the debouncing in the background. You should not be using polling techniques for this assignment. Your code should also be able to detect 
+## Libraries Used
+* <msp430.h>
 
-### Hints
-You need to take a look at how the P1IE and P1IES registers work and how to control them within an interrupt routine. Remember that the debouncing is not going to be the main process you are going to run by the end of the lab.
+## Compatability:
+* MSP430F5529
+* MSP430FR2311
+* MSP430FR5994
+* MSP430FR6989
+* MSP430G2553
+
+## Program Description
+The Debounce Program was made to correct the unwanted behavior of the mechanical switch (button). The program first initilized all pins used (LEDS, BUTTONS) and Timers. A total of two interrupts were used for BUTTON1 and TIMER A0. Within the BUTTON1 interrupt, first the interrupt flag was cleared and the interrupt was enabled. Timer A0 starts to count using SMCLK in UPMODE (Timer A0 was initially in hault mode). An if else statement was then used to see if the variable temp was 0 or 1. If it was 0 LED1 turns on, temp was set to 1, and the edge of the interrupt was flipped, and else LED1 was off, temp was set to 0, and the edge of the interrupt was flipped. In the Timer A0 interrupt, Timer A0 was set to SMCLK, STOP and BUTTON1 interruptwas enabled. 
 
 ## Extra Work
-### Low Power Modes
-Go into the datasheets or look online for information about the low power modes of your processors and using Energy Trace, see what the lowest power consumption you can achieve while still running your debouncing code. Take a note when your processor is not driving the LED (or unplug the header connecting the LED and check) but running the interrupt routine for your debouncing.
-
 ### Double the fun
-Can you expand your code to debounce two switches? Do you have to use two Timer peripherals to do this?
+Two buttons were bedounced using the same timer peripheral. The button interrupt descriped above was duplicated for the second button. A differnt LED turned on and off (opposite of the first: on when unpressed and off when pressed).
+
+* Performed on MSP430F5529
