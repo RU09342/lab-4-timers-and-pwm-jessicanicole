@@ -8,7 +8,7 @@
 int brightness[11] = {0, 52, 104, 156, 208, 260, 312, 364, 416, 468, 511};       //non-log increase. Increase by 10% brightness each time the button is pressed
 int i = 0;
 
-#define EXLED BIT1
+#define LED2 BIT0
 #define BUTTON1 BIT1
 
 int main(void)
@@ -16,7 +16,7 @@ int main(void)
        WDTCTL = WDTPW + WDTHOLD;             // Stop WDT
 
 //External LED Init
-        P1DIR |= EXLED;                       //set EXTERNAL LED TO OUTPUT
+        P2DIR |= LED2;                       //set LED2 TO OUTPUT
 
 //Button Init
         P1DIR &= ~BUTTON1; //Sets button2, pin1.2 as an input
@@ -35,6 +35,8 @@ int main(void)
         P1IE |=BUTTON1;                           //Button1 interrupt enable
         P1IES |=BUTTON1;                          //set as falling edge
         P1IFG &= ~BUTTON1;                        //clear interrupt flag
+
+        PM5CTL0 &= ~LOCKLPM5;
 
         __bis_SR_register(LPM0_bits + GIE);             // Enter LPM0 and enable global interrupt
  }
