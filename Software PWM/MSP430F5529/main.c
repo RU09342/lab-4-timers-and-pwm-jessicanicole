@@ -5,10 +5,12 @@
 
 #include <msp430.h>
 
-#define EXLED BIT2          //defines EXTERNAL LEED as BIT2
-#define BUTTON1 BIT1        //defines button1 as BIT1
 
-int count=5;                //stars at 50% duty cycle
+int brightness[11] = {0, 52, 104, 156, 208, 260, 312, 364, 416, 468, 511};       //non-log increase. Increase by 10% brightness each time the button is pressed
+int i = 5;                 //starts at 50% duty cycle
+
+#define EXLED BIT2          //defines EXTERNAL LED as BIT2
+#define BUTTON1 BIT1        //defines button1 as BIT1
 
 void main(void)
 {
@@ -19,8 +21,8 @@ void main(void)
     P1OUT &= ~EXLED;                             //sets output high
 
 //Button INIT
-    P2DIR &= ~BUTTON1;                             //Sets button2, pin1.2 as an input
-    P2REN |=  BUTTON1;                             //Enables the pullup/down resistor
+    P2DIR &= ~BUTTON1;                             //Sets BUTTON1 as input
+    P2REN |=  BUTTON1;                             //Enables the pullup resistor
     P2OUT |=  BUTTON1;                             //Set the resistor to be a pullup resistor
 
 //TIMER INIT
@@ -43,25 +45,22 @@ void main(void)
 #pragma vector=PORT2_VECTOR
 __interrupt void Port_2(void)
 {
-    if(count==10)
+    TA0CCR1 = brightness[11-i];          //sets duty cycle
+    TA0CCR2 = brightness[i+1];          //skips 0, sets duty cycle
+    i++;                                 //increment i
+    if(i>11)                            //if i is greater than 11, i goes back to equaling 0. (The brightness array only goes to 11) This makes LED brightness loop.
     {
-        count=0;                            //sets count back to 0
-        TA0CCR1=0;                          //sets TA0CCR1 to 0
+       i=0;
     }
-    else
-    {
-        count++;                             //increments count
-        TA0CCR1 = count*100;                 //Increments CCR1 by 100 Hz
-    }
-P1OUT ^= EXLED;                             //toggles EXTERNAL LED
-P2IFG &=~(BIT1);                            //clears flag
+
+      P2IFG &= ~BUTTON1;                //clears interrupt flag
 }
 
 //Timer A0 ISR
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void Timer_A0 (void)
 {
-    if(count!=0)                                    //if count does not = 0
+    if(i!=0)                                    //if count does not = 0
         P1OUT |= EXLED;                           //EXTERNAL LED on
 }
 
@@ -69,7 +68,7 @@ __interrupt void Timer_A0 (void)
 #pragma vector=TIMER0_A1_VECTOR
 __interrupt void Timer_A1 (void)
 {
-    if(count!=10)                                   //if count does not = 10
+    if(i!=10)                                   //if count does not = 10
         P1OUT &= ~EXLED;                           //EXTERNAL LED off
     TA0IV=0;
 }
