@@ -17,10 +17,10 @@
 * All MSP430FR need this line of code " PM5CTL0 &= ~LOCKLPM5; " to disable high impedance mode.
 * External LED Bits
 ** MSP430F5529: P1.2
-** MSP430FR2311:
-** MSP430FR5994:
-** MSP430FR6989:
-** MSP430G2553:
+** MSP430FR2311: P1.2
+** MSP430FR5994: Used LED2 (P1.1)
+** MSP430FR6989: Used LED2 (P9.7)
+** MSP430G2553: P1.7
 
 * BUTTON1 pins
 ** MSP430F5529: P2.1
