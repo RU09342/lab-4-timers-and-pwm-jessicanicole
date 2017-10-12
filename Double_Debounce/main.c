@@ -1,7 +1,7 @@
-//Button Based Delay on the MSP430G2553
+//Double Debounce on the MSP430F5529
 //Jessica Wozniak
 //Created: 10/1/17
-//Last updated: 10/5/17
+//Last updated: 10/9/17
 
 #include "msp430F5529.h"
 
