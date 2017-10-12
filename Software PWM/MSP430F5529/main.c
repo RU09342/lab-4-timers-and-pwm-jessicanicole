@@ -60,7 +60,7 @@ __interrupt void Port_2(void)
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void Timer_A0 (void)
 {
-    if(i!=0)                                    //if count does not = 0
+    if(i!=0)
         P1OUT |= EXLED;                           //EXTERNAL LED on
 }
 
@@ -68,7 +68,7 @@ __interrupt void Timer_A0 (void)
 #pragma vector=TIMER0_A1_VECTOR
 __interrupt void Timer_A1 (void)
 {
-    if(i!=10)                                   //if count does not = 10
+    if(i!=11)
         P1OUT &= ~EXLED;                           //EXTERNAL LED off
     TA0IV=0;
 }
