@@ -3,13 +3,13 @@
 //Created: 10/9/17
 //Last updated: 10/11/17
 
-#include <msp430.h>
+#include <msp430fr6989.h>
 
 
 int brightness[11] = {0, 52, 104, 156, 208, 260, 312, 364, 416, 468, 511};       //non-log increase. Increase by 10% brightness each time the button is pressed
 int i = 5;                 //starts at 50% duty cycle
 
-#define EXLED BIT3          //defines EXTERNAL LED as BIT3
+#define LED2 BIT7          //defines LED2 ad=s BIT7
 #define BUTTON1 BIT1        //defines button1 as BIT1
 
 void main(void)
@@ -17,8 +17,8 @@ void main(void)
     WDTCTL = WDTPW | WDTHOLD;                   // stop watchdog timer
 
 //LED INIT
-    P1DIR |= EXLED;                              //sets LED1 as output
-    P1OUT &= ~EXLED;                             //sets output high
+    P9DIR |= LED2;                              //sets LED1 as output
+
 
 //Button INIT
     P1DIR &= ~BUTTON1;                             //Sets BUTTON1 as input
@@ -64,7 +64,7 @@ __interrupt void Port_1(void)
 __interrupt void Timer_A0 (void)
 {
     if(i!=0)
-        P1OUT |= EXLED;                           //EXTERNAL LED on
+        P9OUT |= LED2;                           //EXTERNAL LED on
 }
 
 // TIMER A1 ISR
@@ -72,7 +72,7 @@ __interrupt void Timer_A0 (void)
 __interrupt void Timer_A1 (void)
 {
     if(i!=11)
-        P1OUT &= ~EXLED;                           //EXTERNAL LED off
+        P9OUT &= ~LED2;                           //EXTERNAL LED off
     TA0IV=0;
 }
 
