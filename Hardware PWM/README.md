@@ -14,13 +14,20 @@
 * MSP430G2553
 
 ## Differences between Boards
-* LED2 on each board
-** MSP430F5529: P4.7 
-** MSP430FR2311: P2.0
-** MSP430FR5994: P1.1
-** MSP430FR6989: P9.7
-** MSP430G2553: P1.6
 * All MSP430FR need this line of code " PM5CTL0 &= ~LOCKLPM5; " to disable high impedance mode.
+* External LED Bits
+** MSP430F5529: P1.2
+** MSP430FR2311: P1.1
+** MSP430FR5994: P1.4
+** MSP430FR6989: used LED2 (P9.7)
+** MSP430G2553: used LED2 (P1.6)
+
+* BUTTON1 pins
+** MSP430F5529: P2.1
+** MSP430FR2311: P1.1
+** MSP430FR5994: P5.6
+** MSP430FR6989: P1.1
+** MSP430G2553: P1.3
 
 ## Breadboard Configuration 
 For both PWM programs I personally found it easier to see the change in brightness if the LED was an External LED. I used a green LED and 1k resister on a non- solder breadboard. The resistor was between the cathode of the LED and ground, P1.2 was connected to anode of LED (Port I selected to be output pin). 
