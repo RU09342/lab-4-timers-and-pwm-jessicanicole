@@ -8,14 +8,14 @@
 int brightness[11] = {0, 52, 104, 156, 208, 260, 312, 364, 416, 468, 511};       //non-log increase. Increase by 10% brightness each time the button is pressed
 int i = 0;
 
-#define EXLED BIT7                              //define EXTERNAL LED as BIT7
+#define LED2 BIT7                              //define EXTERNAL LED as BIT7
 #define BUTTON1 BIT1                            //defines BUTTON1 as BIT1
 
 int main(void)
 {
        WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
 //LED Init
-        P9DIR |= EXLED;                       //set EXTERNAL LED TO OUTPUT
+        P9DIR |= LED2;                       //set led2 to output
 
 //Button init
         P1DIR &= ~BUTTON1; //Sets button2, pin1.2 as an input
