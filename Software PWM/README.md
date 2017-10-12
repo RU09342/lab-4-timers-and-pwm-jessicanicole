@@ -15,6 +15,13 @@
 
 ## Differences between Boards
 * All MSP430FR need this line of code " PM5CTL0 &= ~LOCKLPM5; " to disable high impedance mode.
+* External LED Bits
+** MSP430F5529: P1.2
+** MSP430FR2311:
+** MSP430FR5994:
+** MSP430FR6989:
+** MSP430G2553:
+
 * BUTTON1 pins
 ** MSP430F5529: P2.1
 ** MSP430FR2311: P1.1
@@ -37,3 +44,5 @@ Initilizing i to 5 allows the duty cycle to start at 50%. Within the interrupt, 
 Humans perceive brightness in a logarithmic manor. In the main Software PWM, the brightness changes by 10% every time BUTTON1 is pressed (for a period of 511, each 10% step is about 52). In the log software PWM program, each time BUTTON1 is pressed, the brightness increases logarithmically. A 'brightness[10]' array was declared as a global variable and was set to values from 0 to 511 that followed a logarithic pattern. 
 
 * int brightness[10] = {0, 10, 20, 50, 75, 100, 150, 250, 400, 511};
+
+* Performed on MSP430F5529
